@@ -1,46 +1,50 @@
-// Run this code after the DOM has fully loaded
+// ننتظر حتى يتم تحميل محتوى الصفحة بالكامل
 document.addEventListener('DOMContentLoaded', function () {
-    // Select key elements
-    const addButton = document.getElementById('add-task-btn');
-    const taskInput = document.getElementById('task-input');
-    const taskList = document.getElementById('task-list');
 
-    // Function to add a new task
+    // الحصول على العناصر من الصفحة
+    const addButton = document.getElementById('add-task-btn'); // زر إضافة المهمة
+    const taskInput = document.getElementById('task-input');   // حقل إدخال المهمة
+    const taskList = document.getElementById('task-list');     // قائمة المهام
+
+    // دالة لإضافة مهمة جديدة
     function addTask() {
-        const taskText = taskInput.value.trim(); // Remove whitespace
+        // قراءة النص من حقل الإدخال وإزالة الفراغات الزائدة
+        const taskText = taskInput.value.trim();
 
-        // Check if input is empty
-        if (taskText === '') {
-            alert('Please enter a task!');
+        // إذا كان الإدخال فارغًا، نعرض تنبيه للمستخدم
+        if (taskText === "") {
+            alert("من فضلك أدخل مهمة.");
             return;
         }
 
-        // Create <li> element for the task
-        const listItem = document.createElement('li');
-        listItem.textContent = taskText;
+        // إنشاء عنصر <li> لعرض المهمة
+        const li = document.createElement('li');
+        li.textContent = taskText;
 
-        // Create Remove button
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.className = 'remove-btn';
+        // إنشاء زر لحذف المهمة
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.className = 'remove-btn';
 
-        // Remove task on button click
-        removeBtn.onclick = function () {
-            taskList.removeChild(listItem);
+        // عند الضغط على الزر، يتم حذف المهمة من القائمة
+        removeButton.onclick = function () {
+            taskList.removeChild(li);
         };
 
-        // Append button to task and task to list
-        listItem.appendChild(removeBtn);
-        taskList.appendChild(listItem);
+        // إضافة زر الحذف إلى عنصر <li>
+        li.appendChild(removeButton);
 
-        // Clear input field
+        // إضافة عنصر <li> إلى القائمة
+        taskList.appendChild(li);
+
+        // مسح حقل الإدخال بعد إضافة المهمة
         taskInput.value = '';
     }
 
-    // Event: Add task on button click
+    // إضافة حدث عند الضغط على زر "Add Task"
     addButton.addEventListener('click', addTask);
 
-    // Event: Add task on pressing Enter
+    // إضافة حدث عند الضغط على مفتاح "Enter" في حقل الإدخال
     taskInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             addTask();
